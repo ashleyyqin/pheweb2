@@ -4,7 +4,7 @@ from conf_utils import conf
 from file_utils import common_filepaths
 from server_utils import get_variant, get_random_page, get_pheno_region
 from autocomplete import Autocompleter
-from auth import GoogleSignIn
+#from auth import GoogleSignIn
 from version import version as pheweb_version
 from weetabix import *
 #from import weetabix

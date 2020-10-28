@@ -1,7 +1,7 @@
 
 from flask import url_for
 
-from ..file_utils import MatrixReader, IndexedVariantFileReader, common_filepaths
+from file_utils import MatrixReader, IndexedVariantFileReader, common_filepaths
 
 import random
 import re

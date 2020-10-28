@@ -2,7 +2,8 @@
 # This module creates the object `conf`.
 # It also offers some configuration-related utility functions.
 
-from . import utils
+#from . import utils
+from utils import *
 
 import os
 import importlib

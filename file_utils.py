@@ -1,6 +1,6 @@
 
-from .utils import PheWebError, get_phenolist, chrom_order
-from .conf_utils import conf
+from utils import PheWebError, get_phenolist, chrom_order
+from conf_utils import conf
 
 import io
 import os

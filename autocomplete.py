@@ -1,6 +1,6 @@
 
-from ..file_utils import common_filepaths
-from .server_utils import parse_variant
+from file_utils import common_filepaths
+from server_utils import parse_variant
 
 from flask import url_for
 
