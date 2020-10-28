@@ -329,11 +329,11 @@ else:
 
 @bp.route('/')
 def homepage():
-    return render_template('index.html')
+    return render_template('pheweb/serve/templates/index.html')
 
 @bp.route('/about')
 def about_page():
-    return render_template('about.html')
+    return render_template('pheweb/serve/templates/about.html')
 
 def die(message='no message', exception=None):
     if exception is not None:
@@ -346,7 +346,7 @@ def die(message='no message', exception=None):
 @bp.errorhandler(404)
 def error_page(message):
     return render_template(
-        'error.html',
+        'pheweb/serve/templates/error.html',
         message=message
     ), 404
 
