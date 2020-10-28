@@ -1,5 +1,5 @@
 
-from .utils import get_phenolist, get_gene_tuples, pad_gene, PheWebError
+from utils import get_phenolist, get_gene_tuples, pad_gene, PheWebError
 from .conf_utils import conf
 from .file_utils import common_filepaths
 from .server_utils import get_variant, get_random_page, get_pheno_region
