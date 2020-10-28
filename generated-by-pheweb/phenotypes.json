@@ -1,0 +1,1 @@
+[{"phenocode": "008.5.SAIGE_PoissonGLMM.txt.vcf", "pval": 1.1e-09, "nearest_genes": "MEIOC", "chrom": "17", "pos": 42688995, "ref": "C", "alt": "T", "rsids": "rs192608786", "num_peaks": 31, "category": "infectious diseases", "phenostring": "Bacterial enteritis"}]
