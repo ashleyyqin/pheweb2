@@ -1,0 +1,12 @@
+[
+ {
+  "assoc_files": [
+   "/Users/AshleyQin/Documents/GitHub/pheweb/generated-by-pheweb/pheno-gz/008.5.SAIGE_PoissonGLMM.txt.vcf.gz"
+  ],
+  "category": "infectious diseases",
+  "num_cases": 3179.0,
+  "num_controls": 395908.0,
+  "phenocode": "008.5.SAIGE_PoissonGLMM.txt.vcf",
+  "phenostring": "Bacterial enteritis"
+ }
+]
