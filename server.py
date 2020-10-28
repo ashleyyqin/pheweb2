@@ -329,7 +329,7 @@ else:
 
 @bp.route('/')
 def homepage():
-    return render_template('pheweb/serve/templates/index.html')
+    return render_template('/pheweb/serve/templates/index.html')
 
 @bp.route('/about')
 def about_page():
