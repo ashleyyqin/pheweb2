@@ -3,7 +3,7 @@ from utils import get_phenolist, get_gene_tuples, pad_gene, PheWebError
 from conf_utils import conf
 from file_utils import common_filepaths
 from server_utils import get_variant, get_random_page, get_pheno_region
-#from autocomplete import Autocompleter
+from autocomplete import Autocompleter
 #from auth import GoogleSignIn
 from version import version as pheweb_version
 from weetabix import *
@@ -65,26 +65,26 @@ def check_auth(func):
     return decorated_view
 
 
-# autocompleter = Autocompleter(phenos)
-# @bp.route('/api/autocomplete')
-# @check_auth
-# def autocomplete():
-#     query = request.args.get('query', '')
-#     suggestions = autocompleter.autocomplete(query)
-#     if suggestions:
-#         return jsonify(sorted(suggestions, key=lambda sugg: sugg['display']))
-#     return jsonify([])
-#
-# @bp.route('/go')
-# @check_auth
-# def go():
-#     query = request.args.get('query', None)
-#     if query is None:
-#         die("How did you manage to get a null query?")
-#     best_suggestion = autocompleter.get_best_completion(query)
-#     if best_suggestion:
-#         return redirect(best_suggestion['url'])
-#     die("Couldn't find page for {!r}".format(query))
+autocompleter = Autocompleter(phenos)
+@bp.route('/api/autocomplete')
+@check_auth
+def autocomplete():
+    query = request.args.get('query', '')
+    suggestions = autocompleter.autocomplete(query)
+    if suggestions:
+        return jsonify(sorted(suggestions, key=lambda sugg: sugg['display']))
+    return jsonify([])
+
+@bp.route('/go')
+@check_auth
+def go():
+    query = request.args.get('query', None)
+    if query is None:
+        die("How did you manage to get a null query?")
+    best_suggestion = autocompleter.get_best_completion(query)
+    if best_suggestion:
+        return redirect(best_suggestion['url'])
+    die("Couldn't find page for {!r}".format(query))
 
 @bp.route('/api/variant/<query>')
 @check_auth
