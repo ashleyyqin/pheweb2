@@ -15,7 +15,11 @@ import itertools
 
 
 def get_generated_path(*path_parts):
-    return os.path.join(conf.data_dir, 'generated-by-pheweb', *path_parts)
+    output = "https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/"
+    for p in *path_parts:
+        output += p
+    return output
+    #return os.path.join(conf.data_dir, 'generated-by-pheweb', *path_parts)
 
 def get_cacheable_file_location(default_relative_dir, basename):
     if conf.cache:
