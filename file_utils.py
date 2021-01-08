@@ -50,8 +50,8 @@ common_filepaths = {
     'parsed':    (lambda phenocode: get_generated_path('parsed', phenocode)),
     'pheno':     (lambda phenocode: get_generated_path('pheno', phenocode)),
     'pheno_gz':  (lambda phenocode: get_generated_path('pheno_gz', '{}.gz'.format(phenocode) if phenocode else '')),
-    #'manhattan': (lambda phenocode: get_generated_path('manhattan', '{}.json'.format(phenocode) if phenocode else '')),
-    'manhattan' : ('https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/manhattan/' + '{}.json'.format(phenocode) if phenocode else ''),
+    'manhattan': (lambda phenocode: get_generated_path('manhattan', '{}.json'.format(phenocode) if phenocode else '')),
+    #'manhattan' : ('https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/manhattan/' + '{}.json'.format(phenocode) if phenocode else ''),
     'qq':        (lambda phenocode: get_generated_path('qq', '{}.json'.format(phenocode) if phenocode else '')),
 }
 
