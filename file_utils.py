@@ -51,7 +51,7 @@ common_filepaths = {
     'top-loci': (lambda: get_generated_path('top_loci.json')),
     'top-loci-tsv': (lambda: get_generated_path('top_loci.tsv')),
     #'phenotypes_summary': (lambda: get_generated_path('phenotypes.json')),
-    'phenotypes_summary': (lambda: get_generated_path('')),
+    'phenotypes_summary': ("https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/phenotypes.json"),
     'parsed':    (lambda phenocode: get_generated_path('parsed', phenocode)),
     'pheno':     (lambda phenocode: get_generated_path('pheno', phenocode)),
     'pheno_gz':  (lambda phenocode: get_generated_path('pheno_gz', '{}.gz'.format(phenocode) if phenocode else '')),
