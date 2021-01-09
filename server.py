@@ -112,7 +112,7 @@ def variant_page(query):
 @bp.route('/api/manhattan/pheno/<phenocode>')
 @check_auth
 def api_pheno(phenocode):
-    return send_from_directory(common_filepaths['manhattan'](''), phenocode)
+    return redirect(common_filepaths['manhattan'](''), phenocode)
 
 @bp.route('/top_hits')
 @check_auth
@@ -121,11 +121,11 @@ def top_hits_page():
 @bp.route('/api/top_hits.json')
 @check_auth
 def api_top_hits():
-    return send_file(common_filepaths['top-hits-1k']())
+    return redirect(common_filepaths['top-hits-1k']())
 @bp.route('/download/top_hits.tsv')
 @check_auth
 def download_top_hits():
-    return send_file(common_filepaths['top-hits-tsv']())
+    return redirect(common_filepaths['top-hits-tsv']())
 
 @bp.route('/phenotypes')
 @check_auth
@@ -135,12 +135,11 @@ def phenotypes_page():
 @check_auth
 def api_phenotypes():
     return redirect(common_filepaths['phenotypes_summary']())
-    #return send_file(common_filepaths['phenotypes_summary']())
 
 @bp.route('/api/qq/pheno/<phenocode>')
 @check_auth
 def api_pheno_qq(phenocode):
-    return send_from_directory(common_filepaths['qq'](''), phenocode)
+    return redirect(common_filepaths['qq'](''), phenocode)
 
 
 @bp.route('/random')
