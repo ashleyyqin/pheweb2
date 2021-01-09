@@ -134,7 +134,8 @@ def phenotypes_page():
 @bp.route('/api/phenotypes.json')
 @check_auth
 def api_phenotypes():
-    return send_file(common_filepaths['phenotypes_summary']())
+    return redirect(common_filepaths['phenotypes_summary']())
+    #return send_file(common_filepaths['phenotypes_summary']())
 
 @bp.route('/api/qq/pheno/<phenocode>')
 @check_auth
