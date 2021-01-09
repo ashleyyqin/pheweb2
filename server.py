@@ -134,7 +134,7 @@ def phenotypes_page():
 @bp.route('/api/phenotypes.json')
 @check_auth
 def api_phenotypes():
-    return os.path.join(conf.data_dir, 'generated-by-pheweb', *path_parts)
+    return send_from_directory(common_filepaths['phenotypes_summary'](), filename='phenotypes.json')
     #return send_file(common_filepaths['phenotypes_summary']())
 
 @bp.route('/api/qq/pheno/<phenocode>')
