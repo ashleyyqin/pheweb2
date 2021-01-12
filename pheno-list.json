@@ -1501,7 +1501,7 @@
  },
  {
   "assoc_files": [
-   "/n/holystore01/LABS/xlin/Lab/rdey/UKB_Surv/PheWAS/All_PheWAS/Final_Results/pheno.275.1.SAIGE_PoissonGLMM.txt.vcf.gz"
+   "https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/275.1.gz"
   ],
   "category": "hematopoietic",
   "num_cases": 818,
