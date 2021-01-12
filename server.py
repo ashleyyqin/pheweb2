@@ -125,7 +125,7 @@ def api_top_hits():
 @bp.route('/download/top_hits.tsv')
 @check_auth
 def download_top_hits():
-    return redirect(common_filepaths['top-hits-tsv']())
+    return send_file(common_filepaths['top-hits-tsv']())
 
 @bp.route('/phenotypes')
 @check_auth
