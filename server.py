@@ -125,7 +125,7 @@ def api_top_hits():
 @bp.route('/download/top_hits.tsv')
 @check_auth
 def download_top_hits():
-    return send_file(common_filepaths['top-hits-tsv']())
+    return redirect(common_filepaths['top-hits-tsv']())
 
 @bp.route('/phenotypes')
 @check_auth
@@ -296,9 +296,10 @@ if conf.get('download_pheno_sumstats', '') == 'secret':
         if not Hasher.check_hash(token, phenocode):
             die("Sorry, that token is incorrect")
         try:
-            return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
-                                       as_attachment=True,
-                                       attachment_filename='phenocode-{}.tsv.gz'.format(phenocode))
+            return redirect(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode))
+            # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
+            #                            as_attachment=True,
+            #                            attachment_filename='phenocode-{}.tsv.gz'.format(phenocode))
         except Exception as exc:
             die("Sorry, that file doesn't exist.", exception=exc)
 
