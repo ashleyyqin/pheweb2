@@ -121,7 +121,8 @@ def top_hits_page():
 @bp.route('/api/top_hits.json')
 @check_auth
 def api_top_hits():
-    return redirect(common_filepaths['top-hits-1k']())
+    return redirect("http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/top_hits_1k.json")
+    #return redirect(common_filepaths['top-hits-1k']())
 @bp.route('/download/top_hits.tsv')
 @check_auth
 def download_top_hits():
@@ -321,9 +322,9 @@ def gene_page(genename):
 app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
-    if phenocode not in phenos:
-        print('hi')
-        die("Sorry, that phenocode doesn't exist")
+    # if phenocode not in phenos:
+    #     die("Sorry, that phenocode doesn't exist")
+    # print(common_filepaths['pheno_gz'](''), phenocode)
     return redirect(common_filepaths['pheno_gz'](''), phenocode)
         # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
         #                            as_attachment=True,

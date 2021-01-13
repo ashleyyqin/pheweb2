@@ -53,7 +53,7 @@ common_filepaths = {
     'phenotypes_summary': (lambda: get_generated_path('phenotypes.json')),
     'parsed':    (lambda phenocode: get_generated_path('parsed', phenocode)),
     'pheno':     (lambda phenocode: get_generated_path('pheno', phenocode)),
-    'pheno_gz':  (lambda phenocode: get_generated_path('pheno_gz', 'pheno_gz/{}.gz'.format(phenocode) if phenocode else '')),
+    'pheno_gz':  (lambda phenocode: get_generated_path('pheno_gz', '{}.gz'.format(phenocode) if phenocode else '')),
     'manhattan': (lambda phenocode: get_generated_path('manhattan', '{}.json'.format(phenocode) if phenocode else '')),
     'qq':        (lambda phenocode: get_generated_path('qq', '{}.json'.format(phenocode) if phenocode else '')),
 }
