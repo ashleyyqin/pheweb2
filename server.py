@@ -121,8 +121,7 @@ def top_hits_page():
 @bp.route('/api/top_hits.json')
 @check_auth
 def api_top_hits():
-    return redirect("http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/top_hits_1k.json")
-    #return redirect(common_filepaths['top-hits-1k']())
+    return redirect(common_filepaths['top-hits-1k']())
 @bp.route('/download/top_hits.tsv')
 @check_auth
 def download_top_hits():

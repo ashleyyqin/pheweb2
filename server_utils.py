@@ -81,7 +81,8 @@ get_variant = _GetVariant().get_variant
 
 
 def get_random_page():
-    with open(common_filepaths['top-hits-1k']()) as f:
+    with open("http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/top_hits_1k.json") as f:
+    #with open(common_filepaths['top-hits-1k']()) as f:
         hits = json.load(f)
     if not hits:
         return None
