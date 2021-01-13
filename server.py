@@ -318,7 +318,7 @@ def gene_page(genename):
 #         return ret, 200
 #
 # else:
-#     app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
+app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
     if phenocode not in phenos:
