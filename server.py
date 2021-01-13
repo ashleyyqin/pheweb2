@@ -322,6 +322,7 @@ app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
     if phenocode not in phenos:
+        print('hi')
         die("Sorry, that phenocode doesn't exist")
     return redirect(common_filepaths['pheno_gz'](''), phenocode)
         # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
