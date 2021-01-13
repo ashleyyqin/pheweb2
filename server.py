@@ -323,9 +323,10 @@ else:
     def download_pheno(phenocode):
         if phenocode not in phenos:
             die("Sorry, that phenocode doesn't exist")
-        return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
-                                   as_attachment=True,
-                                   attachment_filename='phenocode-{}.tsv.gz'.format(phenocode))
+        return redirect(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode))
+        # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
+        #                            as_attachment=True,
+        #                            attachment_filename='phenocode-{}.tsv.gz'.format(phenocode))
 
 
 @bp.route('/')
