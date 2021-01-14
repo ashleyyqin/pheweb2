@@ -44,7 +44,7 @@ if os.path.isdir(conf.custom_templates):
 phenos = {pheno['phenocode']: pheno for pheno in get_phenolist()}
 
 # global client variable for all AWS S3 interactions
-client = boto3.client('s3',
+s3 = boto3.client('s3',
                        aws_access_key_id=os.environ['S3_KEY'],
                        aws_secret_access_key=os.environ['S3_SECRET']
                      )
