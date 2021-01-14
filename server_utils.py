@@ -94,7 +94,7 @@ def get_random_page():
                          )
     obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/top_hits_1k.json')
     #text = result["Body"].read().decode()
-    hits = json.load(obj['Body'].read())
+    hits = json.load(obj['Body'].read().decode('utf-8'))
     #hits = json.load(obj)
     if not hits:
         return None
