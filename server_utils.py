@@ -7,6 +7,7 @@ import random
 import re
 import itertools
 import json
+import boto3
 
 
 class _Get_Pheno_Region:
