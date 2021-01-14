@@ -93,7 +93,7 @@ def get_random_page():
                            aws_secret_access_key=os.environ['S3_SECRET']
                          )
     result = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/top_hits_1k.json')
-    text = result.get()['Body'].read().decode('utf-8')
+    text = result["Body"].read().decode()
     hits = json.load(text)
     #hits = json.load(obj)
     if not hits:
