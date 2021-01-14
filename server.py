@@ -334,10 +334,12 @@ def download_pheno(phenocode):
 
     #return redirect(common_filepaths['pheno_gz'](''), phenocode)
     key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
-    obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
-    with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
-        content = gzipfile.read()
-    return content
+    # obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
+    # with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
+    #     content = gzipfile.read()
+    # return content
+    s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
+
     #return s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
 
         # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
