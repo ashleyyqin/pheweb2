@@ -7,7 +7,9 @@ import random
 import re
 import itertools
 import json
+
 import boto3
+import os
 
 
 class _Get_Pheno_Region:
@@ -78,28 +80,21 @@ class _GetVariant:
         return v
 get_variant = _GetVariant().get_variant
 
-# ## TRYING TO USE BOTO3 FOR RANDOM page
-# import boto3
-# import os
-# # get a handle on s3
-# session = boto3.Session(
-#                     aws_access_key_id=os.environ['S3_KEY'],
-#                     aws_secret_access_key=os.environ['S3_SECRET'],
-#                     region_name=os.environ['S3_REGION'])
-# s3 = session.resource('s3')
-# # get a handle on the bucket that holds your file
-# bucket = s3.Bucket('broad-ukb-sumstats-us-east-1') # example: energy_market_procesing
-# # get a handle on the object you want (i.e. your file)
-# obj = bucket.Object(key='UKB_GATE/pheweb/top_hits_1k.json') # example: market/zone1/data.csv
-
 
 def get_random_page():
     #with open(common_filepaths['top-hits-1k']()) as f:
         #hits = json.load(f)
-    s3 = boto3.resource('s3')
-    content_object = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/top_hits_1k.json')
-    file_content = content_object.get()['Body'].read().decode('utf-8')
-    hits = json.load(file_content)
+    # s3 = boto3.resource('s3')
+    # content_object = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/top_hits_1k.json')
+    # file_content = content_object.get()['Body'].read().decode('utf-8')
+
+    client = boto3.client('s3',
+                           aws_access_key_id=os.environ['S3_KEY'],
+                           aws_secret_access_key=os.environ['S3_SECRET']
+                         )
+    result = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/top_hits_1k.json')
+    text = result.get()['Body'].read().decode('utf-8')
+    hits = json.load(text)
     #hits = json.load(obj)
     if not hits:
         return None
