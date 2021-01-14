@@ -333,7 +333,8 @@ def download_pheno(phenocode):
     # print(common_filepaths['pheno_gz'](''), phenocode)
 
     #return redirect(common_filepaths['pheno_gz'](''), phenocode)
-    return s3.download_file('broad-ukb-sumstats-us-east-1', (common_filepaths['pheno_gz'](''), phenocode), 'FILE_NAME')
+    key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
+    return s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME')
 
         # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
         #                            as_attachment=True,
