@@ -338,7 +338,8 @@ def download_pheno(phenocode):
     # with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
     #     content = gzipfile.read()
     # return content
-    s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
+    with open('FILE_NAME', 'wb') as f:
+        s3.download_fileobj('broad-ukb-sumstats-us-east-1', key, f)
 
     #return s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
 
