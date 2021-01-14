@@ -19,6 +19,7 @@ import traceback
 import json
 import os
 import os.path
+import boto3
 
 
 bp = Blueprint('bp', __name__, template_folder='templates', static_folder='static')
@@ -41,6 +42,12 @@ if os.path.isdir(conf.custom_templates):
     app.jinja_loader.searchpath.insert(0, conf.custom_templates)
 
 phenos = {pheno['phenocode']: pheno for pheno in get_phenolist()}
+
+# global client variable for all AWS S3 interactions
+client = boto3.client('s3',
+                       aws_access_key_id=os.environ['S3_KEY'],
+                       aws_secret_access_key=os.environ['S3_SECRET']
+                     )
 
 
 def check_auth(func):
@@ -65,15 +72,15 @@ def check_auth(func):
     return decorated_view
 
 
-autocompleter = Autocompleter(phenos)
-@bp.route('/api/autocomplete')
-@check_auth
-def autocomplete():
-    query = request.args.get('query', '')
-    suggestions = autocompleter.autocomplete(query)
-    if suggestions:
-        return jsonify(sorted(suggestions, key=lambda sugg: sugg['display']))
-    return jsonify([])
+# autocompleter = Autocompleter(phenos)
+# @bp.route('/api/autocomplete')
+# @check_auth
+# def autocomplete():
+#     query = request.args.get('query', '')
+#     suggestions = autocompleter.autocomplete(query)
+#     if suggestions:
+#         return jsonify(sorted(suggestions, key=lambda sugg: sugg['display']))
+#     return jsonify([])
 
 @bp.route('/go')
 @check_auth
@@ -81,10 +88,10 @@ def go():
     query = request.args.get('query', None)
     if query is None:
         die("How did you manage to get a null query?")
-    best_suggestion = autocompleter.get_best_completion(query)
-    if best_suggestion:
-        return redirect(best_suggestion['url'])
-    die("Couldn't find page for {!r}".format(query))
+    # best_suggestion = autocompleter.get_best_completion(query)
+    # if best_suggestion:
+    #     return redirect(best_suggestion['url'])
+    # die("Couldn't find page for {!r}".format(query))
 
 @bp.route('/api/variant/<query>')
 @check_auth
@@ -324,7 +331,10 @@ def download_pheno(phenocode):
     # if phenocode not in phenos:
     #     die("Sorry, that phenocode doesn't exist")
     # print(common_filepaths['pheno_gz'](''), phenocode)
-    return redirect(common_filepaths['pheno_gz'](''), phenocode)
+
+    #return redirect(common_filepaths['pheno_gz'](''), phenocode)
+    return s3.download_file('broad-ukb-sumstats-us-east-1', (common_filepaths['pheno_gz'](''), phenocode), 'FILE_NAME')
+
         # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
         #                            as_attachment=True,
         #                            attachment_filename='phenocode-{}.tsv.gz'.format(phenocode))
