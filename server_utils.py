@@ -78,6 +78,7 @@ class _GetVariant:
 get_variant = _GetVariant().get_variant
 
 ## TRYING TO USE BOTO3 FOR RANDOM page
+import boto3
 # get a handle on s3
 session = boto3.Session(
                     aws_access_key_id=os.environ['S3_KEY'],
