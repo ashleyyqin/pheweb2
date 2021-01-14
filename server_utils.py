@@ -82,20 +82,12 @@ get_variant = _GetVariant().get_variant
 
 
 def get_random_page():
-    #with open(common_filepaths['top-hits-1k']()) as f:
-        #hits = json.load(f)
-    # s3 = boto3.resource('s3')
-    # content_object = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/top_hits_1k.json')
-    # file_content = content_object.get()['Body'].read().decode('utf-8')
-
     client = boto3.client('s3',
                            aws_access_key_id=os.environ['S3_KEY'],
                            aws_secret_access_key=os.environ['S3_SECRET']
                          )
     obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/top_hits_1k.json')
-    #text = result["Body"].read().decode()
     hits = json.loads(obj['Body'].read().decode('utf-8'))
-    #hits = json.load(obj)
     if not hits:
         return None
     hits_to_choose_from = [hit for hit in hits if hit['pval'] < 5e-8]
