@@ -334,16 +334,15 @@ def download_pheno(phenocode):
     # if phenocode not in phenos:
     #     die("Sorry, that phenocode doesn't exist")
     # print(common_filepaths['pheno_gz'](''), phenocode)
+    # r = boto3.resource('s3',
+    # aws_access_key_id=os.environ['S3_KEY'],
+    # aws_secret_access_key=os.environ['S3_SECRET']
+    # )
 
-    r = boto3.resource('s3',
-    aws_access_key_id=os.environ['S3_KEY'],
-    aws_secret_access_key=os.environ['S3_SECRET']
-    )
-
-    #return redirect(common_filepaths['pheno_gz'](''), phenocode)
-    key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
-    # obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
-    r.Bucket('broad-ukb-sumstats-us-east-1').download_file(key, 'test.gz')
+    return redirect('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
+    # key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
+    # # obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
+    # r.Bucket('broad-ukb-sumstats-us-east-1').download_file(key, 'test.gz')
 
     #n = obj.get()['Body'].read()
     # with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
