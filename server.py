@@ -329,72 +329,13 @@ def gene_page(genename):
 #
 # else:
 
-## NEW STUFF: just trying to handle downloading large files with boto3
-def get_client():
-    return client(
-        's3',
-        aws_access_key_id=os.environ['S3_KEY'],
-        aws_secret_access_key=os.environ['S3_SECRET']
-    )
-
-def get_total_bytes(s3):
-    result = s3.list_objects(Bucket='broad-ukb-sumstats-us-east-1')
-    for item in result['Contents']:
-        if item['Key'] == 'UKB_GATE/pheweb/pheno_gz/275.1.gz':
-            return item['Size']
-
-
-def get_object(s3, total_bytes):
-    if total_bytes > 1000000:
-        return get_object_range(s3, total_bytes)
-    return s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/275.1.gz')['Body'].read()
-
-
-def get_object_range(s3, total_bytes):
-    offset = 0
-    while total_bytes > 0:
-        end = offset + 999999 if total_bytes > 1000000 else ""
-        total_bytes -= 1000000
-        byte_range = 'bytes={offset}-{end}'.format(offset=offset, end=end)
-        offset = end + 1 if not isinstance(end, str) else None
-        yield s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/275.1.gz', Range=byte_range)['Body'].read()
-
 
 app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
+    if phenocode not in phenos:
+        die("Sorry, that phenocode doesn't exist")
     return redirect('https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
-    # s3 = get_client()
-    # total_bytes = get_total_bytes(s3)
-    #
-    # return Response(
-    #     get_object(s3, total_bytes),
-    #     mimetype='text/plain',
-    #     headers={"Content-Disposition": "attachment;filename=test.txt"}
-    # )
-
-    # if phenocode not in phenos:
-    #     die("Sorry, that phenocode doesn't exist")
-    # print(common_filepaths['pheno_gz'](''), phenocode)
-    # r = boto3.resource('s3',
-    # aws_access_key_id=os.environ['S3_KEY'],
-    # aws_secret_access_key=os.environ['S3_SECRET']
-    # )
-    # r.meta.client.download_file('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode) , 'hello.gz')
-    # return render_template('pheno.html')
-
-    # file = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
-    # return Response(
-    #     file['Body'].read(),
-    #     mimetype='text/plain',
-    #     headers={"Content-Disposition": "attachment;filename=test.txt"}
-    # )
-
-    #return s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
-
-        # return send_from_directory(common_filepaths['pheno_gz'](''), '{}.gz'.format(phenocode),
-        #                            as_attachment=True,
-        #                            attachment_filename='phenocode-{}.tsv.gz'.format(phenocode))
 
 
 @bp.route('/')
