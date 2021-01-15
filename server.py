@@ -363,7 +363,7 @@ def get_object_range(s3, total_bytes):
 app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
-    return 'http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/275.1.gz'
+    return redirect('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/275.1.gz')
     # s3 = get_client()
     # total_bytes = get_total_bytes(s3)
     #
