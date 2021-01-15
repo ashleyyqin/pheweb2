@@ -9,7 +9,7 @@ from version import version as pheweb_version
 from weetabix import *
 #from import weetabix
 
-from flask import Flask, jsonify, render_template, request, redirect, abort, flash, send_from_directory, send_file, session, url_for, Blueprint
+from flask import Flask, jsonify, render_template, request, redirect, abort, flash, send_from_directory, send_file, session, url_for, Blueprint, Response
 from flask_compress import Compress
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user
 
@@ -334,20 +334,19 @@ def download_pheno(phenocode):
     # if phenocode not in phenos:
     #     die("Sorry, that phenocode doesn't exist")
     # print(common_filepaths['pheno_gz'](''), phenocode)
-    r = boto3.resource('s3',
-    aws_access_key_id=os.environ['S3_KEY'],
-    aws_secret_access_key=os.environ['S3_SECRET']
-    )
-    r.meta.client.download_file('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode) , 'hello.gz')
-    return render_template('pheno.html')
-    # key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
-    # # obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
-    # r.Bucket('broad-ukb-sumstats-us-east-1').download_file(key, 'test.gz')
+    # r = boto3.resource('s3',
+    # aws_access_key_id=os.environ['S3_KEY'],
+    # aws_secret_access_key=os.environ['S3_SECRET']
+    # )
+    # r.meta.client.download_file('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode) , 'hello.gz')
+    # return render_template('pheno.html')
 
-    #n = obj.get()['Body'].read()
-    # with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
-    #     content = gzipfile.read()
-    # print(content)
+    file = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
+    return Response(
+        file['Body'].read(),
+        mimetype='text/plain',
+        headers={"Content-Disposition": "attachment;filename=test.txt"}
+    )
 
 
     #return s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
