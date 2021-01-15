@@ -1257,7 +1257,7 @@
   "num_cases": 3146,
   "num_controls": 384838,
   "phenocode": "250.1",
-  "phenostring": "Type 1 diabetes",
+  "phenostring": "Type 1 diabetes"
  },
  {
   "assoc_files": [
@@ -1507,7 +1507,7 @@
   "num_cases": 818,
   "num_controls": 405572,
   "phenocode": "275.1",
-  "phenostring": "Disorders of iron metabolism",
+  "phenostring": "Disorders of iron metabolism"
  },
  {
   "assoc_files": [
