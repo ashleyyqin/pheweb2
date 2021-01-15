@@ -363,6 +363,16 @@ def get_object_range(s3, total_bytes):
 app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
+    return 'http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/275.1.gz'
+    # s3 = get_client()
+    # total_bytes = get_total_bytes(s3)
+    #
+    # return Response(
+    #     get_object(s3, total_bytes),
+    #     mimetype='text/plain',
+    #     headers={"Content-Disposition": "attachment;filename=test.txt"}
+    # )
+
     # if phenocode not in phenos:
     #     die("Sorry, that phenocode doesn't exist")
     # print(common_filepaths['pheno_gz'](''), phenocode)
@@ -373,13 +383,12 @@ def download_pheno(phenocode):
     # r.meta.client.download_file('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode) , 'hello.gz')
     # return render_template('pheno.html')
 
-    file = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
-    return Response(
-        file['Body'].read(),
-        mimetype='text/plain',
-        headers={"Content-Disposition": "attachment;filename=test.txt"}
-    )
-
+    # file = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
+    # return Response(
+    #     file['Body'].read(),
+    #     mimetype='text/plain',
+    #     headers={"Content-Disposition": "attachment;filename=test.txt"}
+    # )
 
     #return s3.download_file('broad-ukb-sumstats-us-east-1', key, 'FILE_NAME.gz')
 
