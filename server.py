@@ -339,7 +339,7 @@ def download_pheno(phenocode):
     # aws_secret_access_key=os.environ['S3_SECRET']
     # )
 
-    return redirect('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
+    return redirect('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode), code=500)
     # key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
     # # obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
     # r.Bucket('broad-ukb-sumstats-us-east-1').download_file(key, 'test.gz')
