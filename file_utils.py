@@ -55,8 +55,7 @@ common_filepaths = {
     'pheno':     (lambda phenocode: get_generated_path('pheno', phenocode)),
     #'pheno_gz':  (lambda phenocode: get_generated_path('pheno_gz', '{}.gz'.format(phenocode) if phenocode else '')),
     # common filepath for pheno_gz is now the key for AWS bucket
-    'pheno_gz':  (lambda phenocode: 'https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode) if phenocode else ''),
-
+    'pheno_gz':  (lambda phenocode: 'http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode) if phenocode else ''),
     'manhattan': (lambda phenocode: get_generated_path('manhattan', '{}.json'.format(phenocode) if phenocode else '')),
     'qq':        (lambda phenocode: get_generated_path('qq', '{}.json'.format(phenocode) if phenocode else '')),
 }
