@@ -181,9 +181,7 @@ def pheno_page(phenocode):
 @check_auth
 def region_page(phenocode, region):
     try:
-        #pheno = phenos[phenocode]
-        # make pheno an S3 Object
-        pheno = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
+        pheno = phenos[phenocode]
     except KeyError:
         die("Sorry, I couldn't find the phewas code {!r}".format(phenocode))
     pheno['phenocode'] = phenocode

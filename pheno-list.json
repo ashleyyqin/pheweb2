@@ -1507,7 +1507,8 @@
   "num_cases": 818,
   "num_controls": 405572,
   "phenocode": "275.1",
-  "phenostring": "Disorders of iron metabolism"
+  "phenostring": "Disorders of iron metabolism",
+  "url_sum": "wget https://www.dropbox.com/s/nl9bmxv2966hrum/PheCode_275.1_SAIGE_MACge20.txt.gz"
  },
  {
   "assoc_files": [
