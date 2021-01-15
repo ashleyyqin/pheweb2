@@ -334,13 +334,11 @@ def download_pheno(phenocode):
     # if phenocode not in phenos:
     #     die("Sorry, that phenocode doesn't exist")
     # print(common_filepaths['pheno_gz'](''), phenocode)
-    # r = boto3.resource('s3',
-    # aws_access_key_id=os.environ['S3_KEY'],
-    # aws_secret_access_key=os.environ['S3_SECRET']
-    # )
-
-    redirect('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode), code=500)
-    return render_template('pheno.html')
+    r = boto3.resource('s3',
+    aws_access_key_id=os.environ['S3_KEY'],
+    aws_secret_access_key=os.environ['S3_SECRET']
+    )
+    return r.meta.client.download_file('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode), 'hello.gz')
     # key = 'UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
     # # obj = s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key=key)
     # r.Bucket('broad-ukb-sumstats-us-east-1').download_file(key, 'test.gz')
