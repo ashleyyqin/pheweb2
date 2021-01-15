@@ -328,6 +328,38 @@ def gene_page(genename):
 #         return ret, 200
 #
 # else:
+
+## NEW STUFF: just trying to handle downloading large files with boto3
+def get_client():
+    return client(
+        's3',
+        aws_access_key_id=os.environ['S3_KEY'],
+        aws_secret_access_key=os.environ['S3_SECRET']
+    )
+
+def get_total_bytes(s3):
+    result = s3.list_objects(Bucket='broad-ukb-sumstats-us-east-1')
+    for item in result['Contents']:
+        if item['Key'] == 'UKB_GATE/pheweb/pheno_gz/275.1.gz':
+            return item['Size']
+
+
+def get_object(s3, total_bytes):
+    if total_bytes > 1000000:
+        return get_object_range(s3, total_bytes)
+    return s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/275.1.gz')['Body'].read()
+
+
+def get_object_range(s3, total_bytes):
+    offset = 0
+    while total_bytes > 0:
+        end = offset + 999999 if total_bytes > 1000000 else ""
+        total_bytes -= 1000000
+        byte_range = 'bytes={offset}-{end}'.format(offset=offset, end=end)
+        offset = end + 1 if not isinstance(end, str) else None
+        yield s3.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/pheno_gz/275.1.gz', Range=byte_range)['Body'].read()
+
+
 app.config['DOWNLOAD_PHENO_SUMSTATS_BUTTON'] = True
 @bp.route('/download/<phenocode>')
 def download_pheno(phenocode):
