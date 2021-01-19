@@ -166,7 +166,8 @@ def IndexedVariantFileReader(phenocode):
     obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/275.1.gz')
     gzipfile = gzip.GzipFile(fileobj=obj.get()["Body"], mode='rb')
 
-    with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
+    #f = gzipfile.read()
+    with io.BufferedReader(gzipfile, buffer_size=2**18) as g: # 256KB buffer
         h = io.TextIOWrapper(g)
     #with read_gzip_s3(obj) as f:
     #with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as gzipfile:
