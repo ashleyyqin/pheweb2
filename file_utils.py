@@ -149,11 +149,10 @@ class _vfr_only_per_variant_fields:
 
 
 # @contextmanager
-# def read_gzip_s3(obj):
-#     with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as f:
-#         with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
-#             with io.TextIOWrapper(g) as h: # bytes -> unicode
-#                 yield h
+def read_gzip_s3(f):
+    with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
+        with io.TextIOWrapper(g) as h: # bytes -> unicode
+            yield h
 
 
 @contextmanager
@@ -166,9 +165,7 @@ def IndexedVariantFileReader(phenocode):
     obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/275.1.gz')
     gzipfile = gzip.GzipFile(fileobj=obj.get()["Body"], mode='rb')
 
-    #f = gzipfile.read()
-    with io.BufferedReader(gzipfile, buffer_size=2**18) as g: # 256KB buffer
-        h = io.TextIOWrapper(g)
+    with read_gzip_s3(gzipfile):
     #with read_gzip_s3(obj) as f:
     #with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as gzipfile:
         #f = gzipfile.read()
@@ -176,8 +173,8 @@ def IndexedVariantFileReader(phenocode):
     # filepath = common_filepaths['pheno_gz'](phenocode)
     # with read_gzip(filepath) as f:
     #with read_gzip(gzipfile) as f:
-    reader = csv.reader(h, dialect='pheweb-internal-dialect')
-    fields = next(reader)
+        reader = csv.reader(gzipfile, dialect='pheweb-internal-dialect')
+        fields = next(reader)
     if fields[0].startswith('#'): # previous version of PheWeb commented the header line
         fields[0] = fields[0][1:]
     for field in fields:
