@@ -173,7 +173,9 @@ def IndexedVariantFileReader(phenocode):
     for field in fields:
         assert field in conf.parse.per_variant_fields or field in conf.parse.per_assoc_fields, field
     colidxs = {field: idx for idx, field in enumerate(fields)}
-    with pysam.TabixFile(filepath, parser=None) as tabix_file:
+
+
+    with pysam.TabixFile(gzipfile, parser=None) as tabix_file:
         yield _ivfr(tabix_file, colidxs)
 class _ivfr:
     def __init__(self, _tabix_file, _colidxs):
