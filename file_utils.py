@@ -148,13 +148,6 @@ class _vfr_only_per_variant_fields:
             yield variant
 
 
-# @contextmanager
-def read_gzip_s3(f):
-    with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
-        with io.TextIOWrapper(g) as h: # bytes -> unicode
-            yield h
-
-
 @contextmanager
 def IndexedVariantFileReader(phenocode):
     # using boto3 to access gzipped files
@@ -315,6 +308,12 @@ def read_gzip(filepath):
         with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
             with io.TextIOWrapper(g) as h: # bytes -> unicode
                 yield h
+
+@contextmanager
+def read_gzip_s3(f):
+    with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
+        with io.TextIOWrapper(g) as h: # bytes -> unicode
+            yield h
 
 @contextmanager
 def read_maybe_gzip(filepath):
