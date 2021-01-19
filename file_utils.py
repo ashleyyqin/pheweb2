@@ -176,7 +176,7 @@ def IndexedVariantFileReader(phenocode):
     colidxs = {field: idx for idx, field in enumerate(fields)}
 
     # trying pytabix module
-    tabix_file = tabix.open('https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/275.1.gz')
+    tabix_file = tabix.open('https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/275.1.gz.tbi')
     #with pysam.TabixFile(gzipfile, parser=None) as tabix_file:
     yield _ivfr(tabix_file, colidxs)
 class _ivfr:
