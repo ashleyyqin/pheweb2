@@ -164,7 +164,7 @@ def IndexedVariantFileReader(phenocode):
                            aws_secret_access_key=os.environ['S3_SECRET']
                          )
     obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/275.1.gz')
-    gzipfile = gzip.GzipFile(fileobj=obj.get()["Body"], 'rb')
+    gzipfile = gzip.GzipFile(fileobj=obj.get()["Body"])
     #with read_gzip_s3(obj) as f:
     #with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as gzipfile:
         #f = gzipfile.read()
