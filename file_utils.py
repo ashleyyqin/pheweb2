@@ -148,12 +148,12 @@ class _vfr_only_per_variant_fields:
             yield variant
 
 
-@contextmanager
-def read_gzip_s3(obj):
-    with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as f:
-        with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
-            with io.TextIOWrapper(g) as h: # bytes -> unicode
-                yield h
+# @contextmanager
+# def read_gzip_s3(obj):
+#     with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as f:
+#         with io.BufferedReader(f, buffer_size=2**18) as g: # 256KB buffer
+#             with io.TextIOWrapper(g) as h: # bytes -> unicode
+#                 yield h
 
 
 @contextmanager
@@ -164,12 +164,13 @@ def IndexedVariantFileReader(phenocode):
                            aws_secret_access_key=os.environ['S3_SECRET']
                          )
     obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/275.1.gz')
-    with read_gzip_s3(obj) as f:
+    #with read_gzip_s3(obj) as f:
     #with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as gzipfile:
         #f = gzipfile.read()
 
     # filepath = common_filepaths['pheno_gz'](phenocode)
     # with read_gzip(filepath) as f:
+    with read_gzip(obj) as f:
         reader = csv.reader(f, dialect='pheweb-internal-dialect')
         fields = next(reader)
     if fields[0].startswith('#'): # previous version of PheWeb commented the header line
