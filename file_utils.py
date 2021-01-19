@@ -171,7 +171,7 @@ def IndexedVariantFileReader(phenocode):
 
     # filepath = common_filepaths['pheno_gz'](phenocode)
     # with read_gzip(filepath) as f:
-    with read_gzip(gzipfile) as f:
+    with read_maybe_gzip(gzipfile) as f:
         reader = csv.reader(f, dialect='pheweb-internal-dialect')
         fields = next(reader)
     if fields[0].startswith('#'): # previous version of PheWeb commented the header line
