@@ -171,9 +171,10 @@ def IndexedVariantFileReader(phenocode):
 
     # filepath = common_filepaths['pheno_gz'](phenocode)
     # with read_gzip(filepath) as f:
-    with read_gzip(gzipfile) as f:
-        reader = csv.reader(f, dialect='pheweb-internal-dialect')
-        fields = next(reader)
+    #with read_gzip(gzipfile) as f:
+    f = gzipfile.read().splitlines(True)
+    reader = csv.reader(f, dialect='pheweb-internal-dialect')
+    fields = next(reader)
     if fields[0].startswith('#'): # previous version of PheWeb commented the header line
         fields[0] = fields[0][1:]
     for field in fields:
