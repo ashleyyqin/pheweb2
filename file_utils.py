@@ -150,9 +150,16 @@ class _vfr_only_per_variant_fields:
 
 @contextmanager
 def IndexedVariantFileReader(phenocode):
-    #filepath = common_filepaths['pheno_gz'](phenocode)
-    filepath = 'https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode)
-    with read_gzip(filepath) as f:
+    # using boto3 to access gzipped files
+    s3 = boto3.resource('s3',
+                           aws_access_key_id=os.environ['S3_KEY'],
+                           aws_secret_access_key=os.environ['S3_SECRET']
+                         )
+    obj = s3.Object('broad-ukb-sumstats-us-east-1', 'https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
+    with gzip.GzipFile(fileobj=obj.get()["Body"]) as gzipfile:
+        f = gzipfile.read()
+    # filepath = common_filepaths['pheno_gz'](phenocode)
+    # with read_gzip(filepath) as f:
         reader = csv.reader(f, dialect='pheweb-internal-dialect')
         fields = next(reader)
     if fields[0].startswith('#'): # previous version of PheWeb commented the header line
