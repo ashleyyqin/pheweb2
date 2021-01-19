@@ -150,7 +150,8 @@ class _vfr_only_per_variant_fields:
 
 @contextmanager
 def IndexedVariantFileReader(phenocode):
-    filepath = common_filepaths['pheno_gz'](phenocode)
+    #filepath = common_filepaths['pheno_gz'](phenocode)
+    filepath = redirect('https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode))
     with read_gzip(filepath) as f:
         reader = csv.reader(f, dialect='pheweb-internal-dialect')
         fields = next(reader)
