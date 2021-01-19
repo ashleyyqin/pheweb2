@@ -164,13 +164,14 @@ def IndexedVariantFileReader(phenocode):
                            aws_secret_access_key=os.environ['S3_SECRET']
                          )
     obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/pheno_gz/275.1.gz')
+    gzipfile = gzip.GzipFile(fileobj=obj.get()["Body"], 'rb')
     #with read_gzip_s3(obj) as f:
     #with gzip.GzipFile(fileobj=obj.get()["Body"], 'rb') as gzipfile:
         #f = gzipfile.read()
 
     # filepath = common_filepaths['pheno_gz'](phenocode)
     # with read_gzip(filepath) as f:
-    with read_gzip(obj) as f:
+    with read_gzip(gzipfile) as f:
         reader = csv.reader(f, dialect='pheweb-internal-dialect')
         fields = next(reader)
     if fields[0].startswith('#'): # previous version of PheWeb commented the header line
