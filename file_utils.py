@@ -272,9 +272,9 @@ class MatrixReader:
     @contextmanager
     def context(self):
         #with pysam.TabixFile(self._filepath, parser=None) as tabix_file:
-        with pysam.TabixFile('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode), parser=None) as tabix_file:
+        with pysam.TabixFile('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/matrix.tsv.gz', parser=None) as tabix_file:
             yield _mr(tabix_file, self._colidxs, self._colidxs_for_pheno, self._info_for_pheno)
-            
+
 class _mr(_ivfr):
     def __init__(self, _tabix_file, _colidxs, _colidxs_for_pheno, _info_for_pheno):
         self._tabix_file=_tabix_file
