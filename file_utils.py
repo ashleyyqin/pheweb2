@@ -228,7 +228,13 @@ class _ivfr:
 
 class MatrixReader:
     #_filepath = get_generated_path('matrix.tsv.gz')
-    _filepath = 'http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/matrix.tsv.gz'
+    # using boto3 to access gzipped files
+    s3 = boto3.resource('s3',
+                           aws_access_key_id=os.environ['S3_KEY'],
+                           aws_secret_access_key=os.environ['S3_SECRET']
+                         )
+    obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/matrix.tsv.gz')
+    gzipfile = gzip.GzipFile(fileobj=obj.get()["Body"], mode='rb')
 
     def __init__(self):
         phenos = get_phenolist()
@@ -238,7 +244,8 @@ class MatrixReader:
             for pheno in phenos
         }
 
-        with read_gzip(self._filepath) as f:
+        #with read_gzip(self._filepath) as f:
+        with read_gzip_s3(gzipfile) as f:
             reader = csv.reader(f, dialect='pheweb-internal-dialect')
             colnames = next(reader)
         assert colnames[0].startswith('#'), colnames
