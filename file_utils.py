@@ -175,7 +175,7 @@ def IndexedVariantFileReader(phenocode):
         assert field in conf.parse.per_variant_fields or field in conf.parse.per_assoc_fields, field
     colidxs = {field: idx for idx, field in enumerate(fields)}
 
-    with pysam.TabixFile('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/275.1.gz', parser=None) as tabix_file:
+    with pysam.TabixFile('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/pheno_gz/{}.gz'.format(phenocode), parser=None) as tabix_file:
         yield _ivfr(tabix_file, colidxs)
 class _ivfr:
     def __init__(self, _tabix_file, _colidxs):
@@ -227,7 +227,8 @@ class _ivfr:
 
 
 class MatrixReader:
-    _filepath = get_generated_path('matrix.tsv.gz')
+    #_filepath = get_generated_path('matrix.tsv.gz')
+    _filepath = 'http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/matrix.tsv.gz'
 
     def __init__(self):
         phenos = get_phenolist()
