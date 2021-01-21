@@ -9,6 +9,7 @@ import re
 import marisa_trie
 import copy
 import boto3
+import os
 
 # TODO: sort suggestions better.
 # - It's good that hitting enter sends you to the thing with the highest token-ratio.
