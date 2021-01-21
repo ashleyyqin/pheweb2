@@ -2,7 +2,7 @@
 from file_utils import common_filepaths
 from server_utils import parse_variant
 
-from flask import url_for
+from flask import url_for, redirect
 
 import itertools
 import re
