@@ -35,7 +35,7 @@ class Autocompleter(object):
         cpra_to_rsids_trie_obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/sites/cpra_to_rsids_trie.marisa')
 
         # self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(common_filepaths['cpra-to-rsids-trie']())
-        self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(cpra_to_rsids_trie_obj)
+        self._cpra_to_rsids_trie = marisa_trie.BytesTrie().cpra_to_rsids_trie_obj.fileno()
         # self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load(common_filepaths['rsid-to-cpra-trie']())
         self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/sites/rsid_to_cpra_trie.marisa')
         # self._gene_alias_trie = marisa_trie.BytesTrie().load(common_filepaths['gene-aliases-trie']())
