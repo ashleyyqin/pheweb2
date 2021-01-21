@@ -27,14 +27,14 @@ class Autocompleter(object):
         self._preprocess_phenos()
 
         # using boto3 to access files
-        s3 = boto3.resource('s3',
+        client = boto3.client('s3',
                                aws_access_key_id=os.environ['S3_KEY'],
                                aws_secret_access_key=os.environ['S3_SECRET']
                              )
-        cpra_to_rsids_trie_obj = s3.Object('broad-ukb-sumstats-us-east-1', 'UKB_GATE/pheweb/sites/cpra_to_rsids_trie.marisa')
+        obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/sites/cpra_to_rsids_trie.marisa')
 
         # self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(common_filepaths['cpra-to-rsids-trie']())
-        self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(cpra_to_rsids_trie_obj)
+        self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(cpra_to_rsids_trie_obj['Body'].read().decode('utf-8'))
         # self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load(common_filepaths['rsid-to-cpra-trie']())
         self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/sites/rsid_to_cpra_trie.marisa')
         # self._gene_alias_trie = marisa_trie.BytesTrie().load(common_filepaths['gene-aliases-trie']())
