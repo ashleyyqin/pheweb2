@@ -31,7 +31,7 @@ class Autocompleter(object):
                                aws_access_key_id=os.environ['S3_KEY'],
                                aws_secret_access_key=os.environ['S3_SECRET']
                              )
-        obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/sites/cpra_to_rsids_trie.marisa')
+        cpra_to_rsids_trie_obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/sites/cpra_to_rsids_trie.marisa')
 
         # self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(common_filepaths['cpra-to-rsids-trie']())
         self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(cpra_to_rsids_trie_obj['Body'].read().decode('utf-8'))
