@@ -24,9 +24,12 @@ class Autocompleter(object):
         self._phenos = copy.deepcopy(phenos)
         self._preprocess_phenos()
 
-        self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(common_filepaths['cpra-to-rsids-trie']())
-        self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load(common_filepaths['rsid-to-cpra-trie']())
-        self._gene_alias_trie = marisa_trie.BytesTrie().load(common_filepaths['gene-aliases-trie']())
+        # self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load(common_filepaths['cpra-to-rsids-trie']())
+        self._cpra_to_rsids_trie = marisa_trie.BytesTrie().load('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/sites/cpra_to_rsids_trie.marisa')
+        # self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load(common_filepaths['rsid-to-cpra-trie']())
+        self._rsid_to_cpra_trie = marisa_trie.BytesTrie().load('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/sites/rsid_to_cpra_trie.marisa')
+        # self._gene_alias_trie = marisa_trie.BytesTrie().load(common_filepaths['gene-aliases-trie']())
+        self._gene_alias_trie = marisa_trie.BytesTrie().load('http://s3.amazonaws.com/broad-ukb-sumstats-us-east-1/UKB_GATE/pheweb/sites/genes/gene_aliases-v{}-hg19.marisa_trie'.format(genes_version))
 
         self._autocompleters = [
             self._autocomplete_variant,
