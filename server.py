@@ -233,8 +233,15 @@ def get_gene_region_mapping():
 
 @functools.lru_cache(None)
 def get_best_phenos_by_gene():
-    with open(common_filepaths['best-phenos-by-gene']()) as f:
-        return json.load(f)
+    # replacing open function w boto3
+    client = boto3.client('s3',
+                           aws_access_key_id=os.environ['S3_KEY'],
+                           aws_secret_access_key=os.environ['S3_SECRET']
+                         )
+    obj = client.get_object(Bucket='broad-ukb-sumstats-us-east-1', Key='UKB_GATE/pheweb/best-phenos-by-gene.json')
+    #with open(common_filepaths['best-phenos-by-gene']()) as f:
+        #return json.load(f)
+    return json.loads(obj['Body'].read().decode('utf-8'))
 
 @bp.route('/region/<phenocode>/gene/<genename>')
 @check_auth
