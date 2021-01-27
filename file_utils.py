@@ -26,8 +26,8 @@ def get_generated_path(*path_parts):
 
 
 def get_cacheable_file_location(default_relative_dir, basename):
-    if conf.cache:
-        return os.path.join(conf.cache, basename)
+    # if conf.cache:
+    #     return os.path.join(conf.cache, basename)
     mkdir_p(get_generated_path(default_relative_dir))
     return get_generated_path(default_relative_dir, basename)
 
