@@ -87,18 +87,27 @@ def _ensure_conf():
     ## Get `conf.cache` working because it's needed for reporting errors
     def _configure_cache():
         conf.set_default_value('cache', os.path.abspath(os.path.expanduser('~/.pheweb/cache')))
-        if conf.cache is False:
+        # if conf.cache is False:
+        #     return
+        # if conf.has_own_property('cache'):
+        #     conf.cache = os.path.abspath(os.path.join(conf.data_dir, os.path.expanduser(conf.cache)))
+        # if not os.path.isdir(conf.cache):
+        #     try:
+        #         mkdir_p(conf.cache)
+        #     except PermissionError:
+        #         print("Warning: caching is disabled because the directory {!r} can't be created.\n".format(conf.cache) +
+        #               "If you don't want caching, set `cache = False` in your config.py.")
+        #         conf.cache = False
+        #         return
+
+        try:
+            mkdir_p(conf.cache)
+        except PermissionError:
+            print("Warning: caching is disabled because the directory {!r} can't be created.\n".format(conf.cache) +
+                  "If you don't want caching, set `cache = False` in your config.py.")
+            conf.cache = False
             return
-        if conf.has_own_property('cache'):
-            conf.cache = os.path.abspath(os.path.join(conf.data_dir, os.path.expanduser(conf.cache)))
-        if not os.path.isdir(conf.cache):
-            try:
-                mkdir_p(conf.cache)
-            except PermissionError:
-                print("Warning: caching is disabled because the directory {!r} can't be created.\n".format(conf.cache) +
-                      "If you don't want caching, set `cache = False` in your config.py.")
-                conf.cache = False
-                return
+
         if not os.access(conf.cache, os.R_OK):
             print('Warning: the directory {!r} is configured to be your cache directory but it is not readable.\n'.format(conf.cache) +
                   "If you don't want caching, set `cache = False` in your config.py.")
