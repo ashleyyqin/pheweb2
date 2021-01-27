@@ -114,7 +114,7 @@ def run(argv):
     parser.add_argument('--urlprefix', default='', help='sub-path at which to host this server')
     args = parser.parse_args(argv)
 
-    from ..conf_utils import conf
+    from conf_utils import conf
     conf.urlprefix = args.urlprefix.rstrip('/')
 
     if args.open:
