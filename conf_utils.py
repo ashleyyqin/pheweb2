@@ -86,7 +86,9 @@ def _ensure_conf():
 
     ## Get `conf.cache` working because it's needed for reporting errors
     def _configure_cache():
-        conf.set_default_value('cache', os.path.abspath(os.path.expanduser('~/.pheweb/cache')))
+        conf.set_default_value('cache', 'https://broad-ukb-sumstats-us-east-1.s3.amazonaws.com/UKB_GATE/pheweb/cache')
+
+        #conf.set_default_value('cache', os.path.abspath(os.path.expanduser('~/.pheweb/cache')))
         # if conf.cache is False:
         #     return
         # if conf.has_own_property('cache'):
