@@ -75,15 +75,15 @@ def check_auth(func):
     return decorated_view
 
 
-# autocompleter = Autocompleter(phenos)
-# @bp.route('/api/autocomplete')
-# @check_auth
-# def autocomplete():
-#     query = request.args.get('query', '')
-#     suggestions = autocompleter.autocomplete(query)
-#     if suggestions:
-#         return jsonify(sorted(suggestions, key=lambda sugg: sugg['display']))
-#     return jsonify([])
+autocompleter = Autocompleter(phenos)
+@bp.route('/api/autocomplete')
+@check_auth
+def autocomplete():
+    query = request.args.get('query', '')
+    suggestions = autocompleter.autocomplete(query)
+    if suggestions:
+        return jsonify(sorted(suggestions, key=lambda sugg: sugg['display']))
+    return jsonify([])
 
 @bp.route('/go')
 @check_auth
